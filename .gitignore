@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Local environment configuration
+.env
+config/network.env
+
+# Generated blockchain artifacts
+generated/*
+!generated/README.md
+
+# Runtime blockchain data
+runtime/
+**/data/
+
+# Keys / secrets
+**/key
+**/key.pub
+*.pem
+
+# Logs
+*.log
