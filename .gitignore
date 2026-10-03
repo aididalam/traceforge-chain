@@ -1,3 +1,4 @@
+cat > .gitignore <<'EOF'
 # macOS
 .DS_Store
 
@@ -20,3 +21,4 @@ runtime/
 
 # Logs
 *.log
+EOF
