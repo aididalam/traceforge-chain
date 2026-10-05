@@ -1,4 +1,3 @@
-cat > README.md <<'EOF'
 # TraceForge Chain
 
 Blockchain infrastructure layer for **TraceForge**.
@@ -7,10 +6,9 @@ TraceForge Chain provides the Hyperledger Besu-based private blockchain network 
 
 ## Parent Project
 
-This repository is a component of:
-
-**TraceForge**  
-https://github.com/aididalam/traceforge
+This repository is the `chain/` submodule of
+[TraceForge](https://github.com/aididalam/traceforge).
+See the parent repository for all components, architecture and setup.
 
 ## Responsibilities
 
@@ -24,5 +22,4 @@ https://github.com/aididalam/traceforge
 
 ## Repository
 
-https://github.com/aididalam/traceforge-chain
-EOF
+[traceforge-chain](https://github.com/aididalam/traceforge-chain)
