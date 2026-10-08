@@ -23,3 +23,11 @@ See the parent repository for all components, architecture and setup.
 ## Repository
 
 [traceforge-chain](https://github.com/aididalam/traceforge-chain)
+
+## Docker deployment
+
+The parent repository provides Docker Compose configuration, private persistent
+storage, runtime domain settings and backup/recovery commands. See the
+[Docker deployment guide](https://github.com/aididalam/traceforge/blob/main/docs/docker-deployment.md).
+Managed reference bootstrap is explicit; existing chains retain their genesis,
+validator keys and storage format. Application updates do not reset validators.

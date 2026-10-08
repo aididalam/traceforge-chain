@@ -1,0 +1,116 @@
+# Managed single-host QBFT reference network. Preserve keys/data across upgrades.
+name: ${TRACEFORGE_PROJECT}-chain
+x-node: &node
+  image: ${TRACEFORGE_BESU_IMAGE:-hyperledger/besu:26.9.0}
+  restart: unless-stopped
+  user: "${TRACEFORGE_UID:-1000}:${TRACEFORGE_GID:-1000}"
+  stop_grace_period: 90s
+  logging: {driver: json-file, options: {max-size: 10m, max-file: "3"}}
+  environment: {JAVA_OPTS: "${TRACEFORGE_BESU_JAVA_OPTS:--Xmx512m}"}
+  mem_limit: ${TRACEFORGE_BESU_MEMORY:-768m}
+services:
+  validator1:
+    <<: *node
+    command:
+      - --data-path=/var/lib/besu
+      - --genesis-file=/config/genesis.json
+      - --bootnodes=/config/bootnodes.txt
+      - --profile=ENTERPRISE
+      - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
+      - --nat-method=NONE
+      - --p2p-host=${VALIDATOR1_IP:-172.28.91.11}
+      - --p2p-port=30303
+      - --min-gas-price=0
+      - --rpc-http-enabled
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,WEB3,QBFT
+      - --host-allowlist=*
+      - --version-compatibility-protection=true
+    volumes:
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/genesis.json:/config/genesis.json:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/bootnodes.txt:/config/bootnodes.txt:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/validator1:/var/lib/besu
+    ports: ["127.0.0.1:${VALIDATOR1_RPC_PORT:-18645}:8545"]
+    networks:
+      chain: {ipv4_address: "${VALIDATOR1_IP:-172.28.91.11}"}
+  validator2:
+    <<: *node
+    command:
+      - --data-path=/var/lib/besu
+      - --genesis-file=/config/genesis.json
+      - --bootnodes=/config/bootnodes.txt
+      - --profile=ENTERPRISE
+      - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
+      - --nat-method=NONE
+      - --p2p-host=${VALIDATOR2_IP:-172.28.91.12}
+      - --p2p-port=30303
+      - --min-gas-price=0
+      - --rpc-http-enabled
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,WEB3,QBFT
+      - --host-allowlist=*
+      - --version-compatibility-protection=true
+    volumes:
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/genesis.json:/config/genesis.json:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/bootnodes.txt:/config/bootnodes.txt:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/validator2:/var/lib/besu
+    ports: ["127.0.0.1:${VALIDATOR2_RPC_PORT:-18646}:8545"]
+    networks:
+      chain: {ipv4_address: "${VALIDATOR2_IP:-172.28.91.12}"}
+  validator3:
+    <<: *node
+    command:
+      - --data-path=/var/lib/besu
+      - --genesis-file=/config/genesis.json
+      - --bootnodes=/config/bootnodes.txt
+      - --profile=ENTERPRISE
+      - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
+      - --nat-method=NONE
+      - --p2p-host=${VALIDATOR3_IP:-172.28.91.13}
+      - --p2p-port=30303
+      - --min-gas-price=0
+      - --rpc-http-enabled
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,WEB3,QBFT
+      - --host-allowlist=*
+      - --version-compatibility-protection=true
+    volumes:
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/genesis.json:/config/genesis.json:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/bootnodes.txt:/config/bootnodes.txt:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/validator3:/var/lib/besu
+    ports: ["127.0.0.1:${VALIDATOR3_RPC_PORT:-18647}:8545"]
+    networks:
+      chain: {ipv4_address: "${VALIDATOR3_IP:-172.28.91.13}"}
+  validator4:
+    <<: *node
+    command:
+      - --data-path=/var/lib/besu
+      - --genesis-file=/config/genesis.json
+      - --bootnodes=/config/bootnodes.txt
+      - --profile=ENTERPRISE
+      - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
+      - --nat-method=NONE
+      - --p2p-host=${VALIDATOR4_IP:-172.28.91.14}
+      - --p2p-port=30303
+      - --min-gas-price=0
+      - --rpc-http-enabled
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,WEB3,QBFT
+      - --host-allowlist=*
+      - --version-compatibility-protection=true
+    volumes:
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/genesis.json:/config/genesis.json:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/shared/bootnodes.txt:/config/bootnodes.txt:ro
+      - ${TRACEFORGE_CHAIN_DATA_DIR:?}/validator4:/var/lib/besu
+    ports: ["127.0.0.1:${VALIDATOR4_RPC_PORT:-18648}:8545"]
+    networks:
+      chain: {ipv4_address: "${VALIDATOR4_IP:-172.28.91.14}"}
+networks:
+  chain:
+    name: ${TRACEFORGE_PROJECT}-chain
+    driver: bridge
+    ipam: {config: [{subnet: "${TRACEFORGE_CHAIN_SUBNET:-172.28.91.0/24}"}]}
