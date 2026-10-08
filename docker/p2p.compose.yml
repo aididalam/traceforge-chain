@@ -1,0 +1,18 @@
+# Enable only on a configured private LAN/VPN interface. Keep RPC loopback-only.
+services:
+  validator1:
+    ports:
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR1_P2P_PORT:?}:${VALIDATOR1_P2P_PORT:?}/tcp"
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR1_P2P_PORT:?}:${VALIDATOR1_P2P_PORT:?}/udp"
+  validator2:
+    ports:
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR2_P2P_PORT:?}:${VALIDATOR2_P2P_PORT:?}/tcp"
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR2_P2P_PORT:?}:${VALIDATOR2_P2P_PORT:?}/udp"
+  validator3:
+    ports:
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR3_P2P_PORT:?}:${VALIDATOR3_P2P_PORT:?}/tcp"
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR3_P2P_PORT:?}:${VALIDATOR3_P2P_PORT:?}/udp"
+  validator4:
+    ports:
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR4_P2P_PORT:?}:${VALIDATOR4_P2P_PORT:?}/tcp"
+      - "${TRACEFORGE_P2P_BIND:?}:${VALIDATOR4_P2P_PORT:?}:${VALIDATOR4_P2P_PORT:?}/udp"

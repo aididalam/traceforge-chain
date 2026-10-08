@@ -1,0 +1,35 @@
+name: ${TRACEFORGE_PROJECT:?}
+services:
+  node:
+    image: ${TRACEFORGE_BESU_IMAGE:?}
+    restart: unless-stopped
+    user: "${TRACEFORGE_UID:?}:${TRACEFORGE_GID:?}"
+    stop_grace_period: 90s
+    security_opt: [no-new-privileges:true]
+    logging: {driver: json-file, options: {max-size: 10m, max-file: "3"}}
+    mem_limit: ${TRACEFORGE_BESU_MEMORY:-512m}
+    environment: {JAVA_OPTS: "${TRACEFORGE_BESU_JAVA_OPTS:--Xmx256m}"}
+    command:
+      - --data-path=/var/lib/besu
+      - --genesis-file=/config/genesis.json
+      - --bootnodes=/config/bootnodes.txt
+      - --profile=ENTERPRISE
+      - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
+      - --nat-method=NONE
+      - --p2p-host=${TRACEFORGE_P2P_ADVERTISE_HOST:?}
+      - --p2p-port=${TRACEFORGE_NODE_P2P_PORT:-30307}
+      - --min-gas-price=0
+      - --rpc-http-enabled
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,WEB3,QBFT
+      - --host-allowlist=*
+      - --version-compatibility-protection=true
+    volumes:
+      - ${TRACEFORGE_DATA_DIR:?}/shared/genesis.json:/config/genesis.json:ro
+      - ${TRACEFORGE_DATA_DIR:?}/shared/bootnodes.txt:/config/bootnodes.txt:ro
+      - ${TRACEFORGE_DATA_DIR:?}/data:/var/lib/besu
+    ports:
+      - "${TRACEFORGE_P2P_BIND:?}:${TRACEFORGE_NODE_P2P_PORT:-30307}:${TRACEFORGE_NODE_P2P_PORT:-30307}/tcp"
+      - "${TRACEFORGE_P2P_BIND:?}:${TRACEFORGE_NODE_P2P_PORT:-30307}:${TRACEFORGE_NODE_P2P_PORT:-30307}/udp"
+      - "127.0.0.1:${TRACEFORGE_NODE_RPC_PORT:-18545}:8545"

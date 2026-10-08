@@ -18,8 +18,8 @@ services:
       - --profile=ENTERPRISE
       - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
       - --nat-method=NONE
-      - --p2p-host=${VALIDATOR1_IP:-172.28.91.11}
-      - --p2p-port=30303
+      - --p2p-host=${VALIDATOR1_ADVERTISE_HOST:-172.28.91.11}
+      - --p2p-port=${VALIDATOR1_P2P_PORT:-30303}
       - --min-gas-price=0
       - --rpc-http-enabled
       - --rpc-http-host=0.0.0.0
@@ -43,8 +43,8 @@ services:
       - --profile=ENTERPRISE
       - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
       - --nat-method=NONE
-      - --p2p-host=${VALIDATOR2_IP:-172.28.91.12}
-      - --p2p-port=30303
+      - --p2p-host=${VALIDATOR2_ADVERTISE_HOST:-172.28.91.12}
+      - --p2p-port=${VALIDATOR2_P2P_PORT:-30303}
       - --min-gas-price=0
       - --rpc-http-enabled
       - --rpc-http-host=0.0.0.0
@@ -68,8 +68,8 @@ services:
       - --profile=ENTERPRISE
       - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
       - --nat-method=NONE
-      - --p2p-host=${VALIDATOR3_IP:-172.28.91.13}
-      - --p2p-port=30303
+      - --p2p-host=${VALIDATOR3_ADVERTISE_HOST:-172.28.91.13}
+      - --p2p-port=${VALIDATOR3_P2P_PORT:-30303}
       - --min-gas-price=0
       - --rpc-http-enabled
       - --rpc-http-host=0.0.0.0
@@ -93,8 +93,8 @@ services:
       - --profile=ENTERPRISE
       - --data-storage-format=${TRACEFORGE_BESU_STORAGE_FORMAT:-BONSAI}
       - --nat-method=NONE
-      - --p2p-host=${VALIDATOR4_IP:-172.28.91.14}
-      - --p2p-port=30303
+      - --p2p-host=${VALIDATOR4_ADVERTISE_HOST:-172.28.91.14}
+      - --p2p-port=${VALIDATOR4_P2P_PORT:-30303}
       - --min-gas-price=0
       - --rpc-http-enabled
       - --rpc-http-host=0.0.0.0
